@@ -4,6 +4,13 @@ import re
 import requests
 
 """
+Create folders and download AoC input for all available days not yet done.
+
+TODO:
+* Add any error handling
+* Check if folder is created but input hasn't been downloaded
+* Folder creation -> function?
+
 This is all kinda messy, but as a first pass and first time using requests,
 not a terrible showing. Only intended for use by me anyway, so if something
 breaks, 🤷🏼‍♂️
@@ -32,7 +39,6 @@ def download_input(day=None, year=None, session=token):
     return bytearray("An error occured in requesting data.", 'utf-8')
   else:
     return r.content
-
 
 
 
@@ -65,6 +71,6 @@ if today > max_date and month == 12:
 elif month != 12:
   print("It's not December! Advent of Code starts December 1st.")
 elif today == max_date:
-  print("Today's folder already created.")
+  print("All folders already created.")
 else:
   print("I missed something.")
