@@ -20,24 +20,21 @@ def part_a(puzzle_input):
 
   return twos * threes
 
+
 test_input = ['abcde','fghij','klmno','pqrst','fguij','axcye','wvxyz']
 
 def part_b(puzzle_input):
   for p in puzzle_input:
     for i in puzzle_input:
-      diff = 0
-      for z in zip(p, i):
-        if z[0] != z[1]:
-          diff += 1
+      common = ''
+      for z in zip(p,i):
+        if z[0] == z[1]:
+          common += z[0]
       
-      if diff == 1:
-        answer = ''
-        for z in zip(p,i):
-          if z[0] == z[1]:
-            answer += z[0]
-        return answer
+      if len(common) == len(i)-1:
+        return common
   
-  return 'ERROR'
+  return 'No matching boxes found (something went wrong).'
 
 
 start_time = timeit.default_timer()
