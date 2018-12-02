@@ -26,10 +26,9 @@ def part_b(puzzle_input):
   for p in puzzle_input:
     for i in puzzle_input:
       common = [z[0] for z in zip(p,i) if z[0] == z[1]]
-      common = ''.join(common)
       
       if len(common) == len(i)-1:
-        return common
+        return ''.join(common)
   
   return 'No matching boxes found (something went wrong).'
 
