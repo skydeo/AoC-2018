@@ -11,8 +11,7 @@ def part_a(puzzle_input):
   twos = 0
   threes = 0
   for p in puzzle_input:
-    counter = collections.Counter(p)
-    values = set(counter.values())
+    values = set(collections.Counter(p).values())
     if 2 in values:
       twos += 1
     if 3 in values:
@@ -26,10 +25,8 @@ test_input = ['abcde','fghij','klmno','pqrst','fguij','axcye','wvxyz']
 def part_b(puzzle_input):
   for p in puzzle_input:
     for i in puzzle_input:
-      common = ''
-      for z in zip(p,i):
-        if z[0] == z[1]:
-          common += z[0]
+      common = [z[0] for z in zip(p,i) if z[0] == z[1]]
+      common = ''.join(common)
       
       if len(common) == len(i)-1:
         return common
