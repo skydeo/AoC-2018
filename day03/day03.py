@@ -39,9 +39,7 @@ def print_cloth(cloth):
     print(r)
 
 
-def part_a(puzzle_input, cloth_dimensions, cloth_char = '.'):
-  puzzle_input = clean_input(puzzle_input)
-
+def process_cloth(puzzle_input, cloth_dimensions, cloth_char = '.'):
   cloth = create_cloth(cloth_dimensions, cloth_char)
 
   if debug:
@@ -63,8 +61,33 @@ def part_a(puzzle_input, cloth_dimensions, cloth_char = '.'):
     if debug:
       print_cloth(cloth)
   
+  return cloth
+
+
+def part_a(puzzle_input, cloth_dimensions):
+  puzzle_input = clean_input(puzzle_input)
+  cloth = process_cloth(puzzle_input, cloth_dimensions)
+
   return sum(row.count('X') for row in cloth)
 
+def part_b(puzzle_input, cloth_dimensions):
+  puzzle_input = clean_input(puzzle_input)
+  cloth = process_cloth(puzzle_input, cloth_dimensions)
 
-print('{} square inches are within 2+ claims.'.format(part_a(puzzle_input, (1000, 1000))))
+  for row in puzzle_input:
+    ins = row[0]
+    size = row[2][0] * row[2][1]
+
+    if sum(row.count(ins) for row in cloth) == size:
+      return ins
+
+start_time = timeit.default_timer()
+part_a = part_a(puzzle_input, (1000, 1000))
+run_time = round(timeit.default_timer()-start_time, 2)
+print('{} square inches are within 2+ claims.\t({}s)'.format(part_a, run_time))
+
+start_time = timeit.default_timer()
+part_b = part_b(puzzle_input, (1000, 1000))
+run_time = round(timeit.default_timer()-start_time, 2)
+print('Claim {} is intact.\t({}s)'.format(part_b, run_time))
 
