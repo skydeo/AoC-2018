@@ -18,6 +18,13 @@ breaks, 🤷🏼‍♂️
 
 v = True
 
+template = '''import timeit
+
+with open('input.txt', 'r+') as f:
+  puzzle_input = [i for i in f.read().splitlines()]
+
+'''
+
 with open("token.txt") as t:
   token = t.read().strip()
 
@@ -60,11 +67,17 @@ if today > max_date and month == 12:
 
     if v:
       print("\tCreated folder {}.".format(new_dir))
-      print("\tDownloading input file for day {}.".format(d))
+      print("\tDownloading input file.")
     
 
     with open(os.path.join(new_dir,"input.txt"), "wb") as input_file:
       input_file.write(download_input(d, 2018))
+    
+    if v:
+      print("\tCreating template file.")
+    
+    with open(os.path.join(new_dir,"day" + str(d).zfill(2) + ".py"), "w") as template_file:
+      template_file.write(template)
     
     if v:
       print("Day {} complete.".format(d))
