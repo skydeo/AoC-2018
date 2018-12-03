@@ -82,7 +82,7 @@ if today > max_date and month == 12:
     if v:
       print('Day {} complete.'.format(d))
 elif month != 12:
-  print('It's not December! Advent of Code starts December 1st.')
+  print("It's not December! Advent of Code starts December 1st.")
 elif today == max_date:
   print('All folders already created.')
 else:
