@@ -3,7 +3,7 @@ import os
 import re
 import requests
 
-"""
+'''
 Create folders and download AoC input for all available days not yet done.
 
 TODO:
@@ -14,7 +14,7 @@ TODO:
 This is all kinda messy, but as a first pass and first time using requests,
 not a terrible showing. Only intended for use by me anyway, so if something
 breaks, 🤷🏼‍♂️
-"""
+'''
 
 v = True
 
@@ -25,25 +25,25 @@ with open('{}.in', 'r+') as f:
 
 '''
 
-with open("token.txt") as t:
+with open('token.txt') as t:
   token = t.read().strip()
 
 today = min(datetime.datetime.today().day, 25)
 month = datetime.datetime.today().month
 
-dir_list = sorted(os.listdir(os.path.expanduser(".")))
-folders = [f for f in dir_list if re.search(r"day[0-9]{2}", f) and os.path.isdir(f)]
+dir_list = sorted(os.listdir(os.path.expanduser('.')))
+folders = [f for f in dir_list if re.search(r'day[0-9]{2}', f) and os.path.isdir(f)]
 
 max_date = max([int(folder[-2:]) for folder in folders]) if len(folders) > 0 else 0
 
 
 
 def download_input(day=None, year=None, session=token):
-  url = "https://adventofcode.com/" + str(year) + "/day/" + str(day) + "/input"
-  r = requests.get(url, cookies={"session": session})
+  url = 'https://adventofcode.com/' + str(year) + '/day/' + str(day) + '/input'
+  r = requests.get(url, cookies={'session': session})
 
   if not r.ok:
-    return bytearray("An error occured in requesting data.", 'utf-8')
+    return bytearray('An error occured in requesting data.', 'utf-8')
   else:
     return r.content
 
@@ -52,38 +52,38 @@ def download_input(day=None, year=None, session=token):
 if today > max_date and month == 12:
   if v:
     if max_date == 0:
-      print("No folders exist.")
+      print('No folders exist.')
     else:
-      print("Last folder is day{}.".format(str(max_date).zfill(2)))
+      print('Last folder is day{}.'.format(str(max_date).zfill(2)))
 
   new_dates = range(max_date+1, today+1)
 
   for d in new_dates:
     if v:
-      print("Preparing day {}.".format(d))
+      print('Preparing day {}.'.format(d))
 
-    new_dir = "day" + str(d).zfill(2)
+    new_dir = 'day' + str(d).zfill(2)
     os.mkdir(new_dir)
 
     if v:
-      print("\tCreated folder {}.".format(new_dir))
-      print("\tDownloading input file.")
+      print('\tCreated folder {}.'.format(new_dir))
+      print('\tDownloading input file.')
     
 
-    with open(os.path.join(new_dir, str(d).zfill(2)+".in"), "wb") as input_file:
+    with open(os.path.join(new_dir, str(d).zfill(2)+'.in'), 'wb') as input_file:
       input_file.write(download_input(d, 2018))
     
     if v:
-      print("\tCreating template file.")
+      print('\tCreating template file.')
     
-    with open(os.path.join(new_dir,"day" + str(d).zfill(2) + ".py"), "w") as template_file:
+    with open(os.path.join(new_dir,'day' + str(d).zfill(2) + '.py'), 'w') as template_file:
       template_file.write(template.format(str(d).zfill(2)))
     
     if v:
-      print("Day {} complete.".format(d))
+      print('Day {} complete.'.format(d))
 elif month != 12:
-  print("It's not December! Advent of Code starts December 1st.")
+  print('It's not December! Advent of Code starts December 1st.')
 elif today == max_date:
-  print("All folders already created.")
+  print('All folders already created.')
 else:
-  print("I missed something.")
+  print('I missed something.')
