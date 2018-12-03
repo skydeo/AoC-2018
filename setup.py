@@ -20,7 +20,7 @@ v = True
 
 template = '''import timeit
 
-with open('input.txt', 'r+') as f:
+with open('{}.in', 'r+') as f:
   puzzle_input = [i for i in f.read().splitlines()]
 
 '''
@@ -70,14 +70,14 @@ if today > max_date and month == 12:
       print("\tDownloading input file.")
     
 
-    with open(os.path.join(new_dir,"input.txt"), "wb") as input_file:
+    with open(os.path.join(new_dir, str(d).zfill(2)+".in"), "wb") as input_file:
       input_file.write(download_input(d, 2018))
     
     if v:
       print("\tCreating template file.")
     
     with open(os.path.join(new_dir,"day" + str(d).zfill(2) + ".py"), "w") as template_file:
-      template_file.write(template)
+      template_file.write(template.format(str(d).zfill(2)))
     
     if v:
       print("Day {} complete.".format(d))
