@@ -15,6 +15,7 @@ def sort_input(puzzle_input):
 
   return sorted_input
 
+
 def build_log(text_log):
   guard = None
   sleep_schedule = {}
@@ -64,10 +65,8 @@ start_time = timeit.default_timer()
 sleep_schedule = build_log(sort_input(puzzle_input))
 print('Sleep schedule built.\t({}s)'.format(round(timeit.default_timer()-start_time, 3)))
 
-start_time = timeit.default_timer()
 part_a = part_a(sleep_schedule)
 print('Checksum of the sleepiest guard: {}.'.format(part_a))
 
-start_time = timeit.default_timer()
 part_b = part_b(sleep_schedule)
 print('Checksum of the most regularly sleepy guard: {}.'.format(part_b))
