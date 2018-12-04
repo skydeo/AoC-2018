@@ -30,6 +30,7 @@ with open('token.txt') as t:
 
 today = min(datetime.datetime.today().day, 25)
 month = datetime.datetime.today().month
+year = datetime.datetime.today().year
 
 dir_list = sorted(os.listdir(os.path.expanduser('.')))
 folders = [f for f in dir_list if re.search(r'day[0-9]{2}', f) and os.path.isdir(f)]
@@ -37,13 +38,21 @@ folders = [f for f in dir_list if re.search(r'day[0-9]{2}', f) and os.path.isdir
 max_date = max([int(folder[-2:]) for folder in folders]) if len(folders) > 0 else 0
 
 
-
-def download_input(day=None, year=None, session=token):
+def download_input(day=None, year=None, token):
+  if day = None:
+    day = datetime.datetime.today().day
+  if month = None:
+    year = datetime.datetime.today().year
+  
   url = 'https://adventofcode.com/' + str(year) + '/day/' + str(day) + '/input'
-  r = requests.get(url, cookies={'session': session})
+  r = requests.get(url, cookies={'session': token})
 
-  if not r.ok:
-    return bytearray('An error occured in requesting data.', 'utf-8')
+  if r.content == b'Puzzle inputs differ by user.  Please log in to get your puzzle input.\n':
+    print('Token invalid. No input downloaded. Exiting.')
+    exit(1)
+  elif not r.okay:
+    print('An unspecified error occured in requesting data. Exiting.')
+    exit(1)
   else:
     return r.content
 
@@ -71,7 +80,7 @@ if today > max_date and month == 12:
     
 
     with open(os.path.join(new_dir, str(d).zfill(2)+'.in'), 'wb') as input_file:
-      input_file.write(download_input(d, 2018))
+      input_file.write(download_input(d, year, token))
     
     if v:
       print('\tCreating template file.')
