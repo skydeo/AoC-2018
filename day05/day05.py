@@ -1,4 +1,5 @@
 import timeit
+import string
 
 with open('05.in', 'r+') as f:
   puzzle_input = f.read().strip()
@@ -27,7 +28,22 @@ def part_a(puzzle_input):
   return react_all_units(puzzle_input)
 
 
-start_time = timeit.default_timer()
-result = part_a(puzzle_input)
-print('All reactions complete. {} units remain.\t({}s)'.format(len(result), round(timeit.default_timer()-start_time, 2)))
+def part_b(puzzle_input):
+  reacted_length = {}
 
+  for pair in zip(string.ascii_lowercase, string.ascii_uppercase):
+    replaced_string = puzzle_input.replace(pair[0], '')
+    replaced_string = replaced_string.replace(pair[1], '')
+
+    reacted_length[pair[0]] = len(react_all_units(replaced_string))
+  
+  return min(reacted_length.values())
+
+
+start_time = timeit.default_timer()
+result_a = part_a(puzzle_input)
+print('All reactions complete. {} units remain.\t({}s)'.format(len(result_a), round(timeit.default_timer()-start_time, 2)))
+
+start_time = timeit.default_timer()
+result_b = part_b(puzzle_input)
+print('The most reacted polymer is {} units.\t({}s)'.format(result_b, round(timeit.default_timer()-start_time, 2)))
