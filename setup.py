@@ -38,10 +38,10 @@ folders = [f for f in dir_list if re.search(r'day[0-9]{2}', f) and os.path.isdir
 max_date = max([int(folder[-2:]) for folder in folders]) if len(folders) > 0 else 0
 
 
-def download_input(day=None, year=None, token):
-  if day = None:
+def download_input(token, day=None, year=None):
+  if day == None:
     day = datetime.datetime.today().day
-  if month = None:
+  if month == None:
     year = datetime.datetime.today().year
   
   url = 'https://adventofcode.com/' + str(year) + '/day/' + str(day) + '/input'
@@ -50,7 +50,7 @@ def download_input(day=None, year=None, token):
   if r.content == b'Puzzle inputs differ by user.  Please log in to get your puzzle input.\n':
     print('Token invalid. No input downloaded. Exiting.')
     exit(1)
-  elif not r.okay:
+  elif not r.ok:
     print('An unspecified error occured in requesting data. Exiting.')
     exit(1)
   else:
@@ -80,7 +80,7 @@ if today > max_date and month == 12:
     
 
     with open(os.path.join(new_dir, str(d).zfill(2)+'.in'), 'wb') as input_file:
-      input_file.write(download_input(d, year, token))
+      input_file.write(download_input(token, d, year))
     
     if v:
       print('\tCreating template file.')
