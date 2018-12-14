@@ -24,4 +24,4 @@ def sum_metadata(nodes):
 
 checksum = sum_metadata(puzzle_input)
 
-print(checksum)
+print(f"Sum of all metadata entries: {checksum}.")
