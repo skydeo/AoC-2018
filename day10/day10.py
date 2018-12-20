@@ -45,13 +45,11 @@ def part_a(puzzle_input):
   x_lb = bb[1]
   y_lb = bb[3]
 
-  print(x_lb, y_lb)
-  
   r = 1
   for t in range(time,time+r):
     max_x, min_x, max_y, min_y = bb_size(puzzle_input, t)
     screen = [['.'] * (max_x+1-x_lb) for _ in range(max_y+1-y_lb)]
-    print(f"Screen size is {len(screen[0])} x {len(screen)}.")
+    # print(f"Screen size is {len(screen[0])} x {len(screen)}.")
 
     for [x, y, vx, vy] in puzzle_input:
       x_pos = x + t * vx - x_lb
